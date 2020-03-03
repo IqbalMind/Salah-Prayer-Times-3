@@ -1,7 +1,7 @@
-# Salah Prayer Times 1
+# Salah Prayer Times
 
-A cleaner and more standarized version of:
-http://praytimes.org/code/git/?a=tree&p=PrayTimes&hb=HEAD&f=v1/php
+Saya hanya mengubah setting agar kalian tinggal pake tanpa harus config lagi
+https://github.com/AmanaEstates/Salah-Prayer-Times-3
 
 # How to use
 
@@ -22,11 +22,11 @@ require dirname(__FILE__) . DS . 'core' . DS . 'Prayer_Times.php';
 Then intialize a location/setting object:
 
 ```
-$settings               = new Settings('US');
-$settings->location     = array('Detroit', 'Michigan', 'US');
-$settings->latitude     = 42.4056;
-$settings->longitude    = -83.0531;
-$settings->timezone     = 'America/Detroit';
+$settings = new Settings('ID');
+$settings->location     = array('Bandung', 'West Java', 'ID');
+$settings->latitude     = -6.898319;
+$settings->longitude    = 107.619542;
+$settings->timezone     = 'Asia/JAkarta';
 ```
 
 This will automatically assign the method/madhab based on the country (US). Not not all countries have defaults so you can do the following additional sets:
@@ -40,15 +40,19 @@ To access prayer times you call the prayer time library as so:
 
 ```
 $prayer = new Prayer_Times($settings);
-$times = $prayer->getPrayerTimes(time());
-echo '--------------------';
-echo 'Salah Times for December 25th, 2017' . PHP_EOL;
-echo 'Fajir: '      . format_am_pm($times[0]) . PHP_EOL;
-echo 'Duha: '       . format_am_pm($times[1]) . PHP_EOL;
-echo 'Dhur: '       . format_am_pm($times[2]) . PHP_EOL;
-echo 'Asr: '        . format_am_pm($times[3]) . PHP_EOL;
-echo 'Maghrib: '    . format_am_pm($times[4]) . PHP_EOL;
-echo 'Isha: '       . format_am_pm($times[5]) . PHP_EOL;
+echo '<br>Prayer times for: ' . implode(', ', $settings->location) . PHP_EOL;
+foreach($daterange as $date){
+    $times = $prayer->getPrayerTimes($date->getTimeStamp());
+    echo '<br>--------------------<br>';
+    echo $date->format('D M jS Y') . PHP_EOL;
+    echo '<br>Subuh: '      . format_am_pm($times[0]) . PHP_EOL;
+    echo '<br>Duha: '       . format_am_pm($times[1]) . PHP_EOL;
+    echo '<br>Dzuhur r: '       . format_am_pm($times[2]) . PHP_EOL;
+    echo '<br>Ashar: '        . format_am_pm($times[3]) . PHP_EOL;
+    echo '<br>Sunet: '      . format_am_pm($times[4]) . PHP_EOL;
+    echo '<br>Maghrib: '    . format_am_pm($times[5]) . PHP_EOL;
+    echo '<br>Isya: '       . format_am_pm($times[6]) . PHP_EOL;
+}
 ```
 
 # Methods
